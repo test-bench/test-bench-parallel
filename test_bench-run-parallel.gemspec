@@ -28,5 +28,7 @@ Gem::Specification.new do |spec|
 
   spec.platform = Gem::Platform::RUBY
 
+  spec.add_runtime_dependency 'test_bench-run'
+
   spec.add_development_dependency 'test_bench'
 end
