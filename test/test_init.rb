@@ -6,7 +6,7 @@ ENV['TEST_FIXTURE_DETAIL'] ||= ENV['D']
 puts RUBY_DESCRIPTION
 
 require_relative '../init'
-require 'test_bench/run/parallel/controls'
+require 'test_bench/parallel/controls'
 
 require 'pp'
 

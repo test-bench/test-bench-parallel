@@ -1,6 +1,6 @@
 require_relative 'test_init'
 
-TestBench::Run::Parallel.(
+TestBench::Parallel::Run.(
   'example/test/automated',
   exclude: ['*_init.rb', 'some-exclude-pattern*']
 ) or exit(false)
