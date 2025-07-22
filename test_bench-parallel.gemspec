@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |spec|
   spec.name = 'test_bench-parallel'
-  spec.version = '0.0.0.0'
+  spec.version = '3.0.0.0'
 
   spec.summary = "Parallel runner for projects that use TestBench"
   spec.description = <<~TEXT.each_line(chomp: true).map(&:strip).join(' ')
