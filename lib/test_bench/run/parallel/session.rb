@@ -9,6 +9,11 @@ module TestBench
         attr_accessor :file_path_queue
         attr_accessor :telemetry_queue
 
+        def pending_file_count
+          @pending_file_count ||= 0
+        end
+        attr_writer :pending_file_count
+
         def initialize(session, processes)
           @session = session
           @processes = processes
@@ -37,29 +42,39 @@ module TestBench
         def execute(file_path)
           start if not started?
 
+          self.pending_file_count += 1
+
           file_path_queue.push(file_path)
+
+          until pending_file_count <= threads.count
+            update
+          end
         end
 
-        def wait
+        def close
           file_path_queue.close
 
           until threads.empty?
-            while event_data_batch = telemetry_queue.pop(timeout: 0)
-              event_data_batch.each do |event_data|
-                session.record_event(event_data)
-              end
-
-              ## If abort on failure only
-              case session.result
-              when TestBench::Session::Result.aborted, TestBench::Session::Result.failed
-                file_path_queue.clear
-                threads.map(&:join)
-                telemetry_queue.clear
-              end
-            end
+            update
 
             threads.delete_if do |thread|
               !thread.alive?
+            end
+          end
+        end
+
+        def update
+          timeout_milliseconds = 100
+          timeout_seconds = Rational(timeout_milliseconds, 1_000)
+
+          while event_data_batch = telemetry_queue.pop(timeout: timeout_seconds)
+            event_data_batch.each do |event_data|
+              session.record_event(event_data)
+
+              case event_data
+              when TestBench::Session::Events::FileExecuted
+                self.pending_file_count -= 1
+              end
             end
           end
         end
@@ -110,18 +125,6 @@ module TestBench
             queue.push(event_data_batch)
 
             self.event_data_batch = nil
-          end
-        end
-
-        module Defaults
-          def self.processes
-            env_processes = ENV['TEST_BENCH_PARALLEL_PROCESSES']
-
-            if not env_processes.nil?
-              env_processes.to_i
-            else
-              Etc.nprocessors
-            end
           end
         end
       end

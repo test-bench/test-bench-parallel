@@ -10,8 +10,6 @@ module TestBench
 
         run.() do
           run << path
-
-          parallel_session.wait
         end
       end
     end
