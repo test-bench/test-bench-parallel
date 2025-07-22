@@ -1,6 +1,6 @@
-# Test Bench Run Parallel
+# Test Bench Parallel
 
-Parallel runner for projects that use TestBench.
+Parallel runner for projects that use [TestBench](http://test-bench.software).
 
 ## Usage
 
@@ -19,4 +19,4 @@ Control the number of processes by setting `TEST_BENCH_PARALLEL_PROCSESSES` to e
 
 ## License
 
-The `test_bench-run-parallel` library is released under the [MIT License](./MIT-License.txt)
+The `test_bench-parallel` library is released under the [MIT License](./MIT-License.txt)
