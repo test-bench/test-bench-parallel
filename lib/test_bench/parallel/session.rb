@@ -1,6 +1,10 @@
 module TestBench
   module Parallel
     class Session
+      include ImportConstants
+
+      import_constants TestBench::Session::Events
+
       attr_reader :session
       attr_reader :processes
 
@@ -71,7 +75,7 @@ module TestBench
             session.record_event(event_data)
 
             case event_data
-            when TestBench::Session::Events::FileExecuted
+            when FileExecuted, FileNotFound
               self.pending_file_count -= 1
             end
           end
