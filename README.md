@@ -1,12 +1,21 @@
 # Test Bench Run Parallel
 
-*[Summary goes here]*
+Parallel runner for projects that use TestBench.
 
-*[Description goes here]*
+## Usage
 
-## Documentation
+Create a test runner file, e.g. `test/automated.rb`:
 
-*[Link to documentation goes here]*
+```ruby
+require_relative 'test_init'
+
+TestBench::Parallel::Run.(
+  'test/automated',
+  exclude: ['some-exclude-pattern-*']
+) or exit(false)
+```
+
+Control the number of processes by setting `TEST_BENCH_PARALLEL_PROCSESSES` to e.g. `16`. Default value is `Etc.nprocessors`.
 
 ## License
 
