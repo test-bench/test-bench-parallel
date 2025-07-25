@@ -15,7 +15,7 @@ TestBench::Parallel::Run.(
 ) or exit(false)
 ```
 
-Control the number of processes by setting `TEST_BENCH_PARALLEL_PROCSESSES` to e.g. `16`. Default value is `Etc.nprocessors`.
+Control the number of processes by setting `TEST_BENCH_PARALLEL_PROCESSES` to e.g. `16`. Default value is `Etc.nprocessors`.
 
 ## License
 
