@@ -55,6 +55,10 @@ module TestBench
       end
 
       def close
+        if file_path_queue.nil?
+          return
+        end
+
         file_path_queue.close
 
         until threads.empty?
